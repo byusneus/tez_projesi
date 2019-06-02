@@ -1,5 +1,6 @@
 import 'package:bitirme_odevi/common/app_background.dart';
 import 'package:bitirme_odevi/common/conversation/conservation_details.dart';
+import 'package:bitirme_odevi/common/drawer.dart';
 import 'package:bitirme_odevi/model/conversation.dart';
 import 'package:bitirme_odevi/pages/landing_page.dart';
 import 'package:bitirme_odevi/utils/database_helper.dart';
@@ -15,6 +16,7 @@ class ConversationPage extends StatefulWidget {
 class _ConversationPageState extends State<ConversationPage> {
   DatabaseHelper _databaseHelper;
   List<Conversation> gorusmeler;
+  final _key = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -34,6 +36,8 @@ class _ConversationPageState extends State<ConversationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      drawer: MyDrawer(),
       body: WillPopScope(
         onWillPop: () async {
           Future.value(
@@ -43,11 +47,28 @@ class _ConversationPageState extends State<ConversationPage> {
           children: <Widget>[
             AppBackground(),
             _buildArrowBack(context),
+            _buildMenuButton(context),
             ConversationDetails(gorusmeler: gorusmeler),
           ],
         ),
       ),
     );
+  }
+
+  Padding _buildMenuButton(BuildContext context) {
+    return Padding(
+          padding: EdgeInsets.only(top: 60.0, right: 15),
+          child: Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
+              onPressed: () => _key.currentState.openDrawer(),
+            ),
+          ),
+        );
   }
 
   Padding _buildArrowBack(BuildContext context) {

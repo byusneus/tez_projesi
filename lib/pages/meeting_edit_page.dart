@@ -1,4 +1,5 @@
 import 'package:bitirme_odevi/common/app_background.dart';
+import 'package:bitirme_odevi/common/drawer.dart';
 import 'package:bitirme_odevi/model/meeting.dart';
 import 'package:bitirme_odevi/model/university_departments.dart';
 import 'package:bitirme_odevi/pages/meeting_page.dart';
@@ -22,6 +23,8 @@ class _MeetingEditPageState extends State<MeetingEditPage> {
   DateTime goDate;
   DatabaseHelper _databaseHelper;
   Meeting meeting;
+
+  final _key = GlobalKey<ScaffoldState>();
 
   bool _isCurrentDepartmentNull = false;
   bool _isvalueDateNull = false;
@@ -57,6 +60,8 @@ class _MeetingEditPageState extends State<MeetingEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      key: _key,
+      drawer: MyDrawer(),
       body: Stack(
         children: <Widget>[
           AppBackground(),
@@ -72,6 +77,19 @@ class _MeetingEditPageState extends State<MeetingEditPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 60.0, right: 15),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                onPressed: () => _key.currentState.openDrawer(),
               ),
             ),
           ),

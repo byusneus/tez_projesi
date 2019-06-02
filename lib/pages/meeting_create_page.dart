@@ -1,4 +1,5 @@
 import 'package:bitirme_odevi/common/app_background.dart';
+import 'package:bitirme_odevi/common/drawer.dart';
 import 'package:bitirme_odevi/model/meeting.dart';
 import 'package:bitirme_odevi/model/university_departments.dart';
 import 'package:bitirme_odevi/pages/conversation_page.dart';
@@ -20,6 +21,8 @@ class _MeetingCreatePageState extends State<MeetingCreatePage> {
   DateTime goDate;
   DatabaseHelper _databaseHelper;
   Meeting meeting;
+
+  final _key = GlobalKey<ScaffoldState>();
 
   bool _isCurrentDepartmentNull = false;
   bool _isvalueDateNull = false;
@@ -50,11 +53,13 @@ class _MeetingCreatePageState extends State<MeetingCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      key: _key,
+      drawer: MyDrawer(),
       body: Stack(
         children: <Widget>[
           AppBackground(),
           Padding(
-            padding: EdgeInsets.only(top: 60.0, left: 15),
+            padding: EdgeInsets.only(top: 60.0, right: 15),
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -66,6 +71,19 @@ class _MeetingCreatePageState extends State<MeetingCreatePage> {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => MeetingPage()));
                 },
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 60.0, left: 15),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                onPressed: () => _key.currentState.openDrawer(),
               ),
             ),
           ),

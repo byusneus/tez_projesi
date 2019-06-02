@@ -1,4 +1,5 @@
 import 'package:bitirme_odevi/common/app_background.dart';
+import 'package:bitirme_odevi/common/drawer.dart';
 import 'package:bitirme_odevi/model/conversation.dart';
 import 'package:bitirme_odevi/model/meeting.dart';
 import 'package:bitirme_odevi/pages/conversation_card_page.dart';
@@ -30,6 +31,8 @@ class _SearchPageState extends State<SearchPage> {
   String _secondvalueDate;
   bool _isvalueDateNull = false;
   bool _issecondvalueDateNull = false;
+
+  final _key = GlobalKey<ScaffoldState>();
 
   DatabaseHelper _databaseHelper;
 
@@ -113,11 +116,13 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      drawer: MyDrawer(),
       body: Stack(
         children: <Widget>[
           AppBackground(),
           Padding(
-            padding: EdgeInsets.only(top: 60.0),
+            padding: EdgeInsets.only(top: 60.0, left: 30),
             child: Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -132,11 +137,24 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.only(top: 60.0, right: 30),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                onPressed: () => _key.currentState.openDrawer(),
+              ),
+            ),
+          ),
           Center(
             child: Column(
               children: <Widget>[
                 SizedBox(
-                  height: 40,
+                  height: 120,
                 ),
                 _buildSearch(context),
                 SizedBox(

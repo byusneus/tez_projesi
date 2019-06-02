@@ -1,4 +1,5 @@
 import 'package:bitirme_odevi/common/app_background.dart';
+import 'package:bitirme_odevi/common/drawer.dart';
 import 'package:bitirme_odevi/common/meeting/meeting_details.dart';
 import 'package:bitirme_odevi/model/meeting.dart';
 import 'package:bitirme_odevi/pages/landing_page.dart';
@@ -17,6 +18,8 @@ class _MeetingPageState extends State<MeetingPage> {
   DatabaseHelper _databaseHelper;
   List<Meeting> toplantilar;
 
+  final _key = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +36,8 @@ class _MeetingPageState extends State<MeetingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      drawer: MyDrawer(),
       body: WillPopScope(
         onWillPop: () async {
           Future.value(
@@ -42,6 +47,19 @@ class _MeetingPageState extends State<MeetingPage> {
           children: <Widget>[
             AppBackground(),
             _buildArrowBack(context),
+            Padding(
+            padding: EdgeInsets.only(top: 60.0, right: 15),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                onPressed: () => _key.currentState.openDrawer(),
+              ),
+            ),
+          ),
             MeetingDetails(toplantilar: toplantilar)
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:bitirme_odevi/common/app_background.dart';
+import 'package:bitirme_odevi/common/drawer.dart';
 import 'package:bitirme_odevi/model/conversation.dart';
 import 'package:bitirme_odevi/pages/conversation_page.dart';
 import 'package:bitirme_odevi/utils/database_helper.dart';
@@ -23,6 +24,9 @@ class _ConversationCreatePageState extends State<ConversationCreatePage> {
   DatabaseHelper _databaseHelper;
   Conversation conversation;
 
+  final _key = GlobalKey<ScaffoldState>();
+  
+
   bool _isUserNull = false;
   bool _isvalueDateNull = false;
 
@@ -38,6 +42,8 @@ class _ConversationCreatePageState extends State<ConversationCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      key: _key,
+      drawer: MyDrawer(),
       body: Stack(
         children: <Widget>[
           AppBackground(),
@@ -54,6 +60,19 @@ class _ConversationCreatePageState extends State<ConversationCreatePage> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ConversationPage()));
                 },
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 60.0, right: 15),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                onPressed: () => _key.currentState.openDrawer(),
               ),
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:bitirme_odevi/common/app_background.dart';
 import 'package:bitirme_odevi/common/conversation_card/conversation_card_details.dart';
 import 'package:bitirme_odevi/common/conversation_card/conversation_card_title.dart';
+import 'package:bitirme_odevi/common/drawer.dart';
 import 'package:bitirme_odevi/model/contact_service.dart';
 import 'package:bitirme_odevi/model/conversation.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class ConversationCardPage extends StatefulWidget {
 
 class _ConversationCardPageState extends State<ConversationCardPage> {
 
+  final _key = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +29,8 @@ class _ConversationCardPageState extends State<ConversationCardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      key: _key,
+      drawer: MyDrawer(),
       body: Stack(
         children: <Widget>[
           AppBackground(),
@@ -41,6 +46,19 @@ class _ConversationCardPageState extends State<ConversationCardPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 30.0, right: 15),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                onPressed: () => _key.currentState.openDrawer(),
               ),
             ),
           ),

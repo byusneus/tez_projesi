@@ -1,4 +1,5 @@
 import 'package:bitirme_odevi/common/app_background.dart';
+import 'package:bitirme_odevi/common/drawer.dart';
 import 'package:bitirme_odevi/common/meeting_card/meeting_card_details.dart';
 import 'package:bitirme_odevi/common/meeting_card/meeting_card_title.dart';
 import 'package:bitirme_odevi/model/meeting.dart';
@@ -6,12 +7,15 @@ import 'package:flutter/material.dart';
 
 class MeetingCardPage extends StatelessWidget {
   final Meeting meeting;
-  const MeetingCardPage({Key key, this.meeting}) : super(key: key);
+  final _key = GlobalKey<ScaffoldState>();
+  MeetingCardPage({Key key, this.meeting}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      key: _key,
+      drawer: MyDrawer(),
       body: Stack(
         children: <Widget>[
           AppBackground(),
@@ -27,6 +31,19 @@ class MeetingCardPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 30.0, right: 15),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                onPressed: () => _key.currentState.openDrawer(),
               ),
             ),
           ),
